@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Animated, {
-	useSharedValue,
-	useAnimatedStyle,
-} from 'react-native-reanimated';
+import Animated, { interpolateNode } from 'react-native-reanimated';
 
 import Service from '../screens/Service';
 import Landing from '../screens/Landing';
@@ -14,25 +11,30 @@ const Drawer = createDrawerNavigator();
 
 const CustomDrawer = () => {
 	const [progress, setprogress] = useState(new Animated.Value(0));
+	const [animatedStyle, setanimatedStyle] = useState();
 
-	const scale = Animated.interpolateNode(progress, {
-		inputRange: [0, 1],
-		outputRange: [1, 0.8],
-	});
+	useEffect(() => {
+		const scale = interpolateNode(progress, {
+			inputRange: [0, 1],
+			outputRange: [1, 0.8],
+		});
 
-	const borderRadius = Animated.interpolateNode(progress, {
-		inputRange: [0, 1],
-		outputRange: [0, 26],
-	});
+		const borderRadius = interpolateNode(progress, {
+			inputRange: [0, 1],
+			outputRange: [0, 26],
+		});
 
-	const animatedStyle = {
-		borderRadius,
-		transform: [
-			{
-				scale,
-			},
-		],
-	};
+		let animatedStyle = {
+			borderRadius,
+			transform: [
+				{
+					scale,
+				},
+			],
+		};
+
+		setanimatedStyle(animatedStyle);
+	}, [progress]);
 
 	return (
 		<View style={styles.CustomDrawerContainer}>
