@@ -1,21 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, TouchableOpacity } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import {
+	useFonts,
+	OpenSans_400Regular,
+	OpenSans_800ExtraBold,
+} from '@expo-google-fonts/open-sans';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import CustomDrawer from './navigation/CustomDrawer';
+
+const Stack = createStackNavigator();
+
+export default function App({ navigation }) {
+	let [fontsLoaded] = useFonts({
+		OpenSans_400Regular,
+		OpenSans_800ExtraBold,
+	});
+
+	if (fontsLoaded) {
+		return (
+			<NavigationContainer>
+				<Stack.Navigator
+					initialRouteName='Landing'
+					screenOptions={{
+						headerTransparent: true,
+						headerTitle: null,
+					}}
+				>
+					<Stack.Screen name='Landing' component={CustomDrawer} />
+				</Stack.Navigator>
+			</NavigationContainer>
+		);
+	} else return null;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
