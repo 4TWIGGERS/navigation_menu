@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: 'white',
+		backgroundColor: '#26D0CE',
 	},
 
 	BurgerMenu: {
